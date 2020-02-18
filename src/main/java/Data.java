@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Data {
@@ -9,28 +10,6 @@ public class Data {
         }
         return data;
     }
- /*
-   private int c = 0;
-   private int d = 0;
-   private int e = 0;
-   private int f = 0;
-
-    private int currentDay = getCellID();
-
-    public boolean isStillToday() {
-        if (this.currentDay == getCellID()) return true;
-        else return false;
-    }
-
-    public void loseDayProgress() {
-            c = 0;
-            d = 0;
-            e = 0;
-            f = 0;
-            this.currentDay = getCellID();
-        }
-
-  */
 
 
     private Integer numberOfMinutes;
@@ -61,9 +40,40 @@ public class Data {
         return dayOfYear - 4;
     }
 
+    public int getNumberFromTrash(String getCellValue) {
+        String trash = getCellValue;
+
+       String clearNumberFromTrash = "";
+
+        char[] divideTrash = trash.toCharArray();
+        int t = 0;
+        for (int i = 0; i < divideTrash.length; i++) {
+            if (divideTrash[i] == '[') {
+                if (divideTrash[i+1] == '"') {
+                    t = i + 2;
+                    while (isNumeric(divideTrash[t])) {
+                        clearNumberFromTrash += divideTrash[t];
+                        t++;
+                    }
+                }
+            }
+
+        }
+        return Integer.parseInt(clearNumberFromTrash);
+    }
+
     public static boolean isNumeric(String strNum) {
         try {
             double d = Double.parseDouble(strNum);
+        } catch (NumberFormatException | NullPointerException e) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean isNumeric(char ch) {
+        try {
+            double d = Double.parseDouble(String.valueOf(ch));
         } catch (NumberFormatException | NullPointerException e) {
             return false;
         }

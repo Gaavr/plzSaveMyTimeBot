@@ -7,7 +7,7 @@ import java.security.GeneralSecurityException;
 
 public class Main {
     public static void main(String[] args) throws IOException, GeneralSecurityException {
-        ApiContextInitializer.init();
+      /*  ApiContextInitializer.init();
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
         try {
             telegramBotsApi.registerBot(Bot.getBot());
@@ -15,9 +15,8 @@ public class Main {
             e.printStackTrace();
         }
 
-
-
-
-
+       */
+        System.out.println(Data.getData().getNumberFromTrash(GoogleSheetAPI.getGoogleSheetAPI()
+                .getCellValue("C", Data.getData().getCellID())));
     }
 }

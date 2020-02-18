@@ -33,7 +33,7 @@ public class GoogleSheetAPI {
 
     public static Sheets sheetsService;
     private static String APPLICATION_NAME = "plzSaveMyTimeBot";
-    private static String SPREADSHEET_ID = "youSheedID";
+    private static String SPREADSHEET_ID = "";
 
     private static Credential authorize() throws IOException, GeneralSecurityException {
         InputStream in = GoogleSheetAPI.class.getResourceAsStream("credentials.json");
@@ -52,7 +52,7 @@ public class GoogleSheetAPI {
 
         Credential credential = new AuthorizationCodeInstalledApp(
                 flow, new LocalServerReceiver())
-                .authorize("userID");
+                .authorize("");
 
         return credential;
     }
@@ -100,13 +100,13 @@ public class GoogleSheetAPI {
     }
 
 
-    /*
-    public static void getCellValue() throws IOException, GeneralSecurityException {
+
+    public String getCellValue(String subjectOfLearning, int todayRow) throws IOException, GeneralSecurityException {
         // The ID of the spreadsheet to retrieve data from.
-        String spreadsheetId = "1m5lnlF9AN6eeViOJl2onemvuaXDGd5HSLZ_aQEtbo40"; // TODO: Update placeholder value.
+        String spreadsheetId = ""; // TODO: Update placeholder value.
 
         // The A1 notation of the values to retrieve.
-        String range = "C35"; // TODO: Update placeholder value.
+        String range = subjectOfLearning + todayRow; // TODO: Update placeholder value.
 
         // How values should be represented in the output.
         // The default render option is ValueRenderOption.FORMATTED_VALUE.
@@ -127,10 +127,11 @@ public class GoogleSheetAPI {
         ValueRange response = request.execute();
 
         // TODO: Change code below to process the `response` object:
-        System.out.println(response);
+        //System.out.println(response).;
+        return response.toString();
     }
 
-     */
+
 
 
 
