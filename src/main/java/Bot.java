@@ -31,7 +31,9 @@ public class Bot extends TelegramLongPollingBot {
         while (Data.getData().getNumberOfMinutes() != 0) {
             try {
                 GoogleSheetAPI.getGoogleSheetAPI().writeToSheet(Data.getData().getCellID(), Data.getData().getSubject(),
-                        Data.getData().getNumberOfMinutes());
+                        Data.getData().getNumberOfMinutes() +
+                        GoogleSheetAPI.getGoogleSheetAPI().getCellValue(Data.getData().getSubject(),
+                                Data.getData().getCellID()));
             } catch (Exception e) {
                 System.out.println("Не удалось записать данные в таблицу");
                 e.printStackTrace();

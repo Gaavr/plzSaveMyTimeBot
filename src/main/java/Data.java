@@ -11,7 +11,6 @@ public class Data {
         return data;
     }
 
-
     private Integer numberOfMinutes;
 
     public Integer getNumberOfMinutes() {
@@ -21,7 +20,6 @@ public class Data {
     public void setNumberOfMinutes(Integer numberOfMinutes) {
             this.numberOfMinutes = numberOfMinutes;
     }
-
 
     private String subject = "C";
 
@@ -38,28 +36,6 @@ public class Data {
         Calendar calendar = Calendar.getInstance();
         int dayOfYear = calendar.get(Calendar.DAY_OF_YEAR);
         return dayOfYear - 4;
-    }
-
-    public int getNumberFromTrash(String getCellValue) {
-        String trash = getCellValue;
-
-       String clearNumberFromTrash = "";
-
-        char[] divideTrash = trash.toCharArray();
-        int t = 0;
-        for (int i = 0; i < divideTrash.length; i++) {
-            if (divideTrash[i] == '[') {
-                if (divideTrash[i+1] == '"') {
-                    t = i + 2;
-                    while (isNumeric(divideTrash[t])) {
-                        clearNumberFromTrash += divideTrash[t];
-                        t++;
-                    }
-                }
-            }
-
-        }
-        return Integer.parseInt(clearNumberFromTrash);
     }
 
     public static boolean isNumeric(String strNum) {

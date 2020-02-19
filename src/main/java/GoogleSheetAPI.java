@@ -11,7 +11,6 @@ import com.google.api.services.sheets.v4.SheetsScopes;
 import com.google.api.services.sheets.v4.model.UpdateValuesResponse;
 import com.google.api.services.sheets.v4.model.ValueRange;
 
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -45,8 +44,7 @@ public class GoogleSheetAPI {
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
                 GoogleNetHttpTransport.newTrustedTransport(), JacksonFactory.getDefaultInstance(),
                 clientSecrets, scopes)
-                .setDataStoreFactory(new FileDataStoreFactory(new java.io.File("C:\\Users\\Gavrp" +
-                        "\\Desktop\\Проекты\\plzSaveMyTimeBot")))
+                .setDataStoreFactory(new FileDataStoreFactory(new java.io.File("C:\\Projects\\plzSaveMyTimeBot")))
                 .setAccessType("offline")
                 .build();
 
@@ -100,35 +98,51 @@ public class GoogleSheetAPI {
     }
 
 
-
-    public String getCellValue(String subjectOfLearning, int todayRow) throws IOException, GeneralSecurityException {
+    // Возвращает значение ячейки из гугл таблицы
+    public Integer getCellValue(String subjectOfLearning, int todayRow) throws IOException, GeneralSecurityException {
         // The ID of the spreadsheet to retrieve data from.
-        String spreadsheetId = ""; // TODO: Update placeholder value.
+        String spreadsheetId = "";
 
         // The A1 notation of the values to retrieve.
-        String range = subjectOfLearning + todayRow; // TODO: Update placeholder value.
+        String range = subjectOfLearning + todayRow;
 
         // How values should be represented in the output.
         // The default render option is ValueRenderOption.FORMATTED_VALUE.
-        String valueRenderOption = "FORMATTED_VALUE"; // TODO: Update placeholder value.
-
-        // How dates, times, and durations should be represented in the output.
-        // This is ignored if value_render_option is
-        // FORMATTED_VALUE.
-        // The default dateTime render option is [DateTimeRenderOption.SERIAL_NUMBER].
-        String dateTimeRenderOption = null; // TODO: Update placeholder value.
+        String valueRenderOption = "FORMATTED_VALUE";
 
         sheetsService = getSheetsService();
         Sheets.Spreadsheets.Values.Get request =
                 sheetsService.spreadsheets().values().get(spreadsheetId, range);
         request.setValueRenderOption(valueRenderOption);
-       // request.setDateTimeRenderOption(dateTimeRenderOption);
 
         ValueRange response = request.execute();
 
-        // TODO: Change code below to process the `response` object:
-        //System.out.println(response).;
-        return response.toString();
+        //Значение полученное от гугла, которое содержит лишнюю информацию
+        String trash = response.toString();
+        //Пробуем получить из строки полной мусора чистое число
+        try {
+            char[] divideTrash = trash.toCharArray();
+            String clearNumberFromTrash = "";
+
+            int t = 0;
+            for (int i = 0; i < divideTrash.length; i++) {
+                if (divideTrash[i] == '[') {
+                    if (divideTrash[i+1] == '"') {
+                        t = i + 2;
+                        while ( Data.getData().isNumeric(divideTrash[t])) {
+                            clearNumberFromTrash += divideTrash[t];
+                            t++;
+                        }
+                    }
+                }
+
+            }
+            return Integer.parseInt(clearNumberFromTrash);
+        }
+        catch (NumberFormatException e) {
+            return 0;
+        }
+
     }
 
 
