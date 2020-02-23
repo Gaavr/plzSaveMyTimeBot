@@ -3,6 +3,11 @@ import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+
 public class Bot extends TelegramLongPollingBot {
 
     private static Bot bot;
@@ -13,46 +18,58 @@ public class Bot extends TelegramLongPollingBot {
         return bot;
     }
 
+    Calendar calendar = new GregorianCalendar();
+
     public void onUpdateReceived(Update update) {
-
         SendMessage message = new SendMessage();
-        message.setChatId(update.getMessage().getChatId());
 
-        defineCommand(update, message);
+        if (update.getMessage().getChatId() == 111111111) {
+            message.setChatId(update.getMessage().getChatId());
+            defineCommand(update, message);
 
-        // Отправить сообщение пользователю
-        try {
-            execute(message);
-        }
-        catch (TelegramApiException e) {
-            e.printStackTrace();
-        }
-
-        while (Data.getData().getNumberOfMinutes() != 0) {
+            // Отправить сообщение пользователю
             try {
-                GoogleSheetAPI.getGoogleSheetAPI().writeToSheet(Data.getData().getCellID(), Data.getData().getSubject(),
-                        Data.getData().getNumberOfMinutes() +
-                        GoogleSheetAPI.getGoogleSheetAPI().getCellValue(Data.getData().getSubject(),
-                                Data.getData().getCellID()));
-            } catch (Exception e) {
-                System.out.println("Не удалось записать данные в таблицу");
+                execute(message);
+            } catch (TelegramApiException e) {
                 e.printStackTrace();
             }
-            Data.getData().setNumberOfMinutes(0);
+
+            while (Data.getData().getNumberOfMinutes() != 0) {
+                try {
+                    GoogleSheetAPI.getGoogleSheetAPI().writeToSheet(Data.getData().getCellID(), Data.getData().getSubject(),
+                            Data.getData().getNumberOfMinutes() +
+                                    GoogleSheetAPI.getGoogleSheetAPI().getCellValue(Data.getData().getSubject(),
+                                            Data.getData().getCellID()));
+                } catch (Exception e) {
+                    System.out.println("Не удалось записать данные в таблицу");
+                    e.printStackTrace();
+                }
+                Data.getData().setNumberOfMinutes(0);
+            }
+        }
+        else {
+           message.setChatId(update.getMessage().getChatId());
+           System.out.println(update.getMessage().getChatId() + " попытался получить доступ к боту в " + calendar.getTime());
+           message.setText("Данный бот работает только на своего создателя! " +
+                   "Для того, чтобы получть доступ к боту, напишите Андрею Александровичу (@gaavr) ;-) ");
+            try {
+                execute(message);
+            } catch (TelegramApiException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 
+
     public void defineCommand(Update update, SendMessage message) {
-
-
-
         //Получаем текст от пользователя
         String command = getUserCommand(update);
 
         if (Data.getData().isNumeric(command)) {
             try {
                 Data.getData().setNumberOfMinutes(Integer.parseInt(command));
-                message.setText(command + " минут/минуты будут добавлены к выбранной категории!");
+                message.setText(command + " минут/минуты были добавлены к выбранной категории!");
             }
             catch (Exception e) {
                 e.printStackTrace();
@@ -83,15 +100,16 @@ public class Bot extends TelegramLongPollingBot {
 
     public String getUserCommand(Update update) {
         String userCommand =  update.getMessage().getText();
-        System.out.println("Пользователем была введена команада " + userCommand);
+        System.out.println("Пользователем " + update.getMessage().getChatId() + " была введена команда "
+                + userCommand + " в " + calendar.getTime());
         return userCommand;
     }
 
     public String getBotUsername() {
-        return "plzSaveMyTimeBot";
+        return "1111111111111111";
     }
 
     public String getBotToken() {
-        return "";
+        return "11111111111111111111";
     }
 }

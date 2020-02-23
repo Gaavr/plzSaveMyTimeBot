@@ -32,7 +32,7 @@ public class GoogleSheetAPI {
 
     public static Sheets sheetsService;
     private static String APPLICATION_NAME = "plzSaveMyTimeBot";
-    private static String SPREADSHEET_ID = "";
+    private static String SPREADSHEET_ID = "111111111111111111111111111";
 
     private static Credential authorize() throws IOException, GeneralSecurityException {
         InputStream in = GoogleSheetAPI.class.getResourceAsStream("credentials.json");
@@ -50,7 +50,7 @@ public class GoogleSheetAPI {
 
         Credential credential = new AuthorizationCodeInstalledApp(
                 flow, new LocalServerReceiver())
-                .authorize("");
+                .authorize("11111111111111111111");
 
         return credential;
     }
@@ -87,7 +87,8 @@ public class GoogleSheetAPI {
     // должен получать букву одного из стобцов
     amountOfMinutes - параметр отвечающий за количество минут, которые передает пользователь
      */
-    public static void writeToSheet(int todayRow, String subjectOfLearning, int amountOfMinutes) throws IOException, GeneralSecurityException {
+    public static void writeToSheet(int todayRow, String subjectOfLearning, int amountOfMinutes)
+            throws IOException, GeneralSecurityException {
         sheetsService = getSheetsService();
         ValueRange body = new ValueRange()
                 .setValues(Arrays.asList(Arrays.asList(amountOfMinutes)));
@@ -101,7 +102,7 @@ public class GoogleSheetAPI {
     // Возвращает значение ячейки из гугл таблицы
     public Integer getCellValue(String subjectOfLearning, int todayRow) throws IOException, GeneralSecurityException {
         // The ID of the spreadsheet to retrieve data from.
-        String spreadsheetId = "";
+        String spreadsheetId = SPREADSHEET_ID;
 
         // The A1 notation of the values to retrieve.
         String range = subjectOfLearning + todayRow;
