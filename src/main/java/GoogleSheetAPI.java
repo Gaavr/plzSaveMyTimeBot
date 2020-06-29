@@ -26,7 +26,7 @@ public class GoogleSheetAPI {
 
     private static Credential authorize() throws IOException, GeneralSecurityException {
 
-        InputStream in = GoogleSheetAPI.class.getResourceAsStream("/plzsavemytimebot-04be3dd7b70c.json");
+        InputStream in = GoogleSheetAPI.class.getResourceAsStream("credentials.json");
         if (in == null) throw new NullPointerException("Файл не найден!");
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(
                 JacksonFactory.getDefaultInstance(), new InputStreamReader(in));
