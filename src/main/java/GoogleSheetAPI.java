@@ -28,6 +28,7 @@ public class GoogleSheetAPI {
 
         InputStream in = GoogleSheetAPI.class.getResourceAsStream("credentials.json");
         if (in == null) throw new NullPointerException("Файл не найден!");
+
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(
                 JacksonFactory.getDefaultInstance(), new InputStreamReader(in));
 

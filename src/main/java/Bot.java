@@ -50,8 +50,7 @@ public class Bot extends TelegramLongPollingBot {
         else {
            message.setChatId(update.getMessage().getChatId());
            System.out.println(update.getMessage().getChatId() + " попытался получить доступ к боту в " + calendar.getTime());
-           message.setText("Данный бот работает только на своего создателя! " +
-                   "Для того, чтобы получть доступ к боту, напишите Андрею Александровичу (@gaavr) ;-) ");
+           message.setText("Данный бот работает только на своего создателя! (@gaavr)");
             try {
                 execute(message);
             } catch (TelegramApiException e) {
@@ -60,7 +59,6 @@ public class Bot extends TelegramLongPollingBot {
 
         }
     }
-
 
     public void defineCommand(Update update, SendMessage message) {
         //Получаем текст от пользователя
