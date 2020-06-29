@@ -20,22 +20,14 @@ import java.util.List;
 
 public class GoogleSheetAPI {
 
-    private static GoogleSheetAPI googleSheetAPI = null;
-    public static GoogleSheetAPI getGoogleSheetAPI() {
-        if (googleSheetAPI == null) {
-            googleSheetAPI = new GoogleSheetAPI();
-        }
-        return googleSheetAPI;
-    }
-
-
-
     public static Sheets sheetsService;
-    private static String APPLICATION_NAME = "plzSaveMyTimeBot";
-    private static String SPREADSHEET_ID = "111111111111111111111111111";
+    private static String APPLICATION_NAME = "plzsavemytimebot";
+    private static String SPREADSHEET_ID = "1KgvfFbUuCmnYwb2f8PpYQENBdXAZPWAhxEbwGs_tx-M";
 
     private static Credential authorize() throws IOException, GeneralSecurityException {
-        InputStream in = GoogleSheetAPI.class.getResourceAsStream("credentials.json");
+
+        InputStream in = GoogleSheetAPI.class.getResourceAsStream("/plzsavemytimebot-04be3dd7b70c.json");
+        if (in == null) throw new NullPointerException("Файл не найден!");
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(
                 JacksonFactory.getDefaultInstance(), new InputStreamReader(in));
 
@@ -44,13 +36,13 @@ public class GoogleSheetAPI {
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
                 GoogleNetHttpTransport.newTrustedTransport(), JacksonFactory.getDefaultInstance(),
                 clientSecrets, scopes)
-                .setDataStoreFactory(new FileDataStoreFactory(new java.io.File("C:\\Projects\\plzSaveMyTimeBot")))
+                .setDataStoreFactory(new FileDataStoreFactory(new java.io.File("C:\\Projects\\SaveMyTimeBot\\plzSaveMyTimeBot")))
                 .setAccessType("offline")
                 .build();
 
         Credential credential = new AuthorizationCodeInstalledApp(
                 flow, new LocalServerReceiver())
-                .authorize("11111111111111111111");
+                .authorize("gavrplay@gmail.com");
 
         return credential;
     }
@@ -70,7 +62,6 @@ public class GoogleSheetAPI {
        // writeToSheet(43, "C",
            //     999);
         getCellValue();
-
     }
  */
 
@@ -100,7 +91,7 @@ public class GoogleSheetAPI {
 
 
     // Возвращает значение ячейки из гугл таблицы
-    public Integer getCellValue(String subjectOfLearning, int todayRow) throws IOException, GeneralSecurityException {
+    public static Integer getCellValue(String subjectOfLearning, int todayRow) throws IOException, GeneralSecurityException {
         // The ID of the spreadsheet to retrieve data from.
         String spreadsheetId = SPREADSHEET_ID;
 
@@ -163,6 +154,5 @@ public class GoogleSheetAPI {
                 .execute();
         System.out.println("Spreadsheet ID: " + spreadsheet.getSpreadsheetId());
     }
-
     */
 }

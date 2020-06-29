@@ -23,7 +23,7 @@ public class Bot extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         SendMessage message = new SendMessage();
 
-        if (update.getMessage().getChatId() == 111111111) {
+        if (update.getMessage().getChatId() == 547044275) {
             message.setChatId(update.getMessage().getChatId());
             defineCommand(update, message);
 
@@ -36,9 +36,9 @@ public class Bot extends TelegramLongPollingBot {
 
             while (Data.getData().getNumberOfMinutes() != 0) {
                 try {
-                    GoogleSheetAPI.getGoogleSheetAPI().writeToSheet(Data.getData().getCellID(), Data.getData().getSubject(),
+                    GoogleSheetAPI.writeToSheet(Data.getData().getCellID(), Data.getData().getSubject(),
                             Data.getData().getNumberOfMinutes() +
-                                    GoogleSheetAPI.getGoogleSheetAPI().getCellValue(Data.getData().getSubject(),
+                                    GoogleSheetAPI.getCellValue(Data.getData().getSubject(),
                                             Data.getData().getCellID()));
                 } catch (Exception e) {
                     System.out.println("Не удалось записать данные в таблицу");
@@ -106,10 +106,10 @@ public class Bot extends TelegramLongPollingBot {
     }
 
     public String getBotUsername() {
-        return "1111111111111111";
+        return "@plzSaveMyTimeBot";
     }
 
     public String getBotToken() {
-        return "11111111111111111111";
+        return "853299646:AAHSPc0FmTTy8_LhYE-sH8mvWlSk9lNOQ-M";
     }
 }
