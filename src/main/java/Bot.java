@@ -1,12 +1,11 @@
+import google.GoogleSheetAPI;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Locale;
 
 public class Bot extends TelegramLongPollingBot {
 
@@ -50,13 +49,12 @@ public class Bot extends TelegramLongPollingBot {
         else {
            message.setChatId(update.getMessage().getChatId());
            System.out.println(update.getMessage().getChatId() + " попытался получить доступ к боту в " + calendar.getTime());
-           message.setText("Данный бот работает только на своего создателя! (@gaavr)");
+           message.setText("Не знаю что вы хотите, но знайте что димас ПЕТУШОК!");
             try {
                 execute(message);
             } catch (TelegramApiException e) {
                 e.printStackTrace();
             }
-
         }
     }
 
