@@ -33,6 +33,8 @@ public class Bot extends TelegramLongPollingBot {
                 e.printStackTrace();
             }
 
+
+
             while (Data.getData().getNumberOfMinutes() != 0) {
                 try {
                     GoogleSheetAPI.writeToSheet(Data.getData().getCellID(), Data.getData().getSubject(),
