@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 
 public class Main {
-    public static void main(String[] args) throws IOException, GeneralSecurityException {
+    public static void main(String[] args) {
 
         ApiContextInitializer.init();
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
@@ -15,6 +15,5 @@ public class Main {
         } catch (TelegramApiRequestException e) {
             e.printStackTrace();
         }
-
     }
 }

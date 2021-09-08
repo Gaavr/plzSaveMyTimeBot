@@ -20,16 +20,16 @@ import java.security.GeneralSecurityException;
 import java.util.Arrays;
 import java.util.List;
 
-public class GoogleSheetAPI {
+public class WorkWithGoogleSheetAPI {
 
     public static Sheets sheetsService;
-    private static String APPLICATION_NAME = "plzsavemytimebot";
-    private static String SPREADSHEET_ID = "1KgvfFbUuCmnYwb2f8PpYQENBdXAZPWAhxEbwGs_tx-M";
+    private static final String APPLICATION_NAME = "plzsavemytimebot";
+    private static final String SPREADSHEET_ID = "1KgvfFbUuCmnYwb2f8PpYQENBdXAZPWAhxEbwGs_tx-M";
 
     private static Credential authorize() throws IOException, GeneralSecurityException {
 
-        InputStream in = GoogleSheetAPI.class.getResourceAsStream("credentials.json");
-        if (in == null) throw new NullPointerException("Файл не найден!");
+        InputStream in = WorkWithGoogleSheetAPI.class.getResourceAsStream("credentials.json");
+        if (in == null) { throw new NullPointerException("Файл не найден!"); }
 
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(
                 JacksonFactory.getDefaultInstance(), new InputStreamReader(in));
@@ -58,27 +58,10 @@ public class GoogleSheetAPI {
                 .build();
     }
 
-
-/*
-    public static void main(String[] args) throws IOException, GeneralSecurityException{
-       // sheetsService = getSheetsService();
-       // writeToSheet(43, "C",
-           //     999);
-        getCellValue();
-    }
- */
-
-
-
-
-
-
-
     /*
     Write data to sheet
-    // todayRow - параметр отвечающий за текущий день
-    // subjectOfLearning - параметр отвечающий за тему, на которое было потрачено время,
-    // должен получать букву одного из стобцов
+    todayRow - параметр отвечающий за текущий день
+    subjectOfLearning - параметр отвечающий за тему, на которое было потрачено время
     amountOfMinutes - параметр отвечающий за количество минут, которые передает пользователь
      */
     public static void writeToSheet(int todayRow, String subjectOfLearning, int amountOfMinutes)
@@ -93,16 +76,10 @@ public class GoogleSheetAPI {
     }
 
 
-    // Возвращает значение ячейки из гугл таблицы
+    // Возвращает значение ячейки из google таблицы
     public static Integer getCellValue(String subjectOfLearning, int todayRow) throws IOException, GeneralSecurityException {
-        // The ID of the spreadsheet to retrieve data from.
         String spreadsheetId = SPREADSHEET_ID;
-
-        // The A1 notation of the values to retrieve.
         String range = subjectOfLearning + todayRow;
-
-        // How values should be represented in the output.
-        // The default render option is ValueRenderOption.FORMATTED_VALUE.
         String valueRenderOption = "FORMATTED_VALUE";
 
         sheetsService = getSheetsService();
@@ -139,12 +116,6 @@ public class GoogleSheetAPI {
         }
 
     }
-
-
-
-
-
-
 
     // Create new sheet
    /* public static void createSheet() throws IOException, GeneralSecurityException {

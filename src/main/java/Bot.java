@@ -1,4 +1,4 @@
-import google.GoogleSheetAPI;
+import google.WorkWithGoogleSheetAPI;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -33,13 +33,11 @@ public class Bot extends TelegramLongPollingBot {
                 e.printStackTrace();
             }
 
-
-
             while (Data.getData().getNumberOfMinutes() != 0) {
                 try {
-                    GoogleSheetAPI.writeToSheet(Data.getData().getCellID(), Data.getData().getSubject(),
+                    WorkWithGoogleSheetAPI.writeToSheet(Data.getData().getCellID(), Data.getData().getSubject(),
                             Data.getData().getNumberOfMinutes() +
-                                    GoogleSheetAPI.getCellValue(Data.getData().getSubject(),
+                                    WorkWithGoogleSheetAPI.getCellValue(Data.getData().getSubject(),
                                             Data.getData().getCellID()));
                 } catch (Exception e) {
                     System.out.println("Не удалось записать данные в таблицу");
@@ -51,7 +49,6 @@ public class Bot extends TelegramLongPollingBot {
         else {
            message.setChatId(update.getMessage().getChatId());
            System.out.println(update.getMessage().getChatId() + " попытался получить доступ к боту в " + calendar.getTime());
-           message.setText("Не знаю что вы хотите, но знайте что димас ПЕТУШОК!");
             try {
                 execute(message);
             } catch (TelegramApiException e) {
@@ -77,20 +74,20 @@ public class Bot extends TelegramLongPollingBot {
         else {
             switch (command) {
                 case "/java":
-                    message.setText("Введите количество минут инвестированных в изучение Java");
+                    message.setText("Введите количество минут потраченного на изучение Java");
                     Data.getData().setSubject("C");
                     break;
                 case "/english":
-                    message.setText("Введите количество минут инвестированных в изучение английскго языка");
+                    message.setText("Введите количество минут потраченного на изучение английского языка");
                     Data.getData().setSubject("D");
                     break;
                 case "/reading":
-                    message.setText("Введите количество минут инвестированных в чтение литературы");
+                    message.setText("Введите количество минут потраченного на чтение литературы");
                     Data.getData().setSubject("E");
                     break;
                 case "/sport":
-                    message.setText("Введите количетво минут инвестирвоанных в занятия спортом");
-                    Data.getData().setSubject("F"); // press "F" to pay respects for this subject
+                    message.setText("Введите количество минут потраченного на занятия спортом");
+                    Data.getData().setSubject("F");
                     break;
             }
         }
@@ -102,12 +99,13 @@ public class Bot extends TelegramLongPollingBot {
                 + userCommand + " в " + calendar.getTime());
         return userCommand;
     }
-
+    //bot username
     public String getBotUsername() {
-        return "@plzSaveMyTimeBot";
+        return "";
     }
 
+    //telegram token
     public String getBotToken() {
-        return "853299646:AAHSPc0FmTTy8_LhYE-sH8mvWlSk9lNOQ-M";
+        return "";
     }
 }
