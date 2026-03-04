@@ -1,11 +1,23 @@
 # plzSaveMyTimeBot
-<h1>Телеграмм бот записывающий данные в гугл таблицу. В моем случае, я использую этого бота, для учета времени
-потраченного не изучение чего-либо.</h1>
 
-1. Отправляешь данные боту в телеграм
+Telegram bot that logs messages into Google Sheets.  
+I use it to track time spent on learning and important activities.
 
-![img_2.png](img_2.png)
+## How it works
 
-2. Бот вносит значения в google таблицу
+1. Send a message to the bot in Telegram (e.g. `SwiftUI 45m`)
+2. The bot parses the input and appends a new row to Google Sheets
 
-![img_1.png](img_1.png)
+## Tech
+
+- Telegram Bot API
+- Google Sheets API
+
+## Screenshots
+
+![Telegram message example](img_2.png)  
+![Google Sheets result](img_1.png)
+
+## Notes
+
+This project was built as a personal productivity tool.
